@@ -142,10 +142,10 @@ export default {
           name: this.$t('bookmarked'),
           handler: 'bookmarked'
         },
-        // {
-        //   name: '画集',
-        //   handler: 'mycollect'
-        // },
+        {
+          name: this.$t('mycollect'),
+          handler: 'mycollect'
+        },
         {
           name: this.$t('spotLight'),
           handler: 'spotLight'

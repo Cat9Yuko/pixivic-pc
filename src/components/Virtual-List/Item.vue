@@ -25,7 +25,7 @@
           @handleLike="handleLike"
         />
         <el-dropdown-menu slot="dropdown">
-          <!-- <el-dropdown-item @click.native="handleCollect">加到画集</el-dropdown-item> -->
+          <el-dropdown-item @click.native="handleCollect">加到画集</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
