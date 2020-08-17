@@ -247,7 +247,7 @@ export default {
     } else {
       this.getIllustDetail();
     }
-    // this.bookmarkedUsers();
+    this.bookmarkedUsers();
     this.fakeLoading()
   },
   methods: {

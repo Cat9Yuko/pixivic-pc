@@ -1,4 +1,3 @@
-
 <template>
   <div class="HeaderBar">
     <el-row
@@ -9,7 +8,10 @@
     >
       <el-col>
         <a href="/">
-          <img alt src="@/assets/images/icon.svg">
+          <img
+            alt
+            src="@/assets/images/icon.svg"
+          >
         </a>
       </el-col>
       <el-col>
@@ -36,8 +38,16 @@
             />
           </el-select>
         </el-autocomplete>
-        <el-popover placement="bottom" style="margin-left:10px" trigger="hover">
-          <i slot="reference" class="el-icon-s-flag" style="color:#409EFF" />
+        <el-popover
+          placement="bottom"
+          style="margin-left:10px"
+          trigger="hover"
+        >
+          <i
+            slot="reference"
+            class="el-icon-s-flag"
+            style="color:#409EFF"
+          />
           <ImgTags
             v-if="hotTags.length"
             :tagslist="hotTags"
@@ -45,10 +55,19 @@
           />
         </el-popover>
       </el-col>
-      <el-select :value="$i18n.locale" @change="changeLocaleLang">
-        <el-option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">{{
-          lang
-        }}</el-option>
+      <el-select
+        :value="$i18n.locale"
+        @change="changeLocaleLang"
+      >
+        <el-option
+          v-for="(lang, i) in langs"
+          :key="`Lang${i}`"
+          :value="lang"
+        >
+          {{
+            lang
+          }}
+        </el-option>
       </el-select>
       <el-col class="header-info">
         <!-- <el-badge :value="3">
@@ -72,13 +91,23 @@
                   :key="item.handler"
                   :command="item.handler"
                   :divided="item.divided"
-                >{{ item.name }}</el-dropdown-item>
+                >
+                  {{ item.name }}
+                </el-dropdown-item>
               </template>
             </el-dropdown-menu>
           </el-dropdown>
           <div
             v-else
-          ><span class="button-text" @click="login">{{ $t('login') }}</span>  <span class="button-text" @click="signUp">{{ $t('signUp') }}</span></div>
+          >
+            <span
+              class="button-text"
+              @click="login"
+            >{{ $t('login') }}</span> <span
+              class="button-text"
+              @click="signUp"
+            >{{ $t('signUp') }}</span>
+          </div>
         </div>
       </el-col>
     </el-row>
@@ -95,6 +124,7 @@ import cookie from 'js-cookie';
 import { mapGetters } from 'vuex';
 import SetDialog from './Setting/index';
 import ImgTags from './ImgTags';
+
 export default {
   name: 'HeaderBar',
   components: {
@@ -132,10 +162,10 @@ export default {
           name: this.$t('bookmarked'),
           handler: 'bookmarked'
         },
-        // {
-        //   name: '画集',
-        //   handler: 'mycollect'
-        // },
+        {
+          name: '画集',
+          handler: 'mycollect'
+        },
         {
           name: this.$t('spotLight'),
           handler: 'spotLight'
@@ -257,13 +287,14 @@ export default {
           this.$store.dispatch('clearCurrentState');
           window.location.href = '/';
         })
-        .catch(_ => {});
+        .catch(_ => {
+        });
     },
     // 获取关键词
     getKeywords() {
       this.$api.search
         .getKeyword(this.params.keyword)
-        .then(({ data: { data }}) => {
+        .then(({ data: { data } }) => {
           if (data && data.keywordList) {
             this.keywords = data.keywordList || [];
           }
@@ -331,10 +362,12 @@ export default {
   width: 100%;
   display: flex;
   overflow: hidden;
-  /deep/.el-select .el-input {
+
+  /deep/ .el-select .el-input {
     width: 80px;
   }
-  /deep/.input-with-select {
+
+  /deep/ .input-with-select {
     width: 25vw;
     background-color: #fff;
   }
@@ -342,17 +375,20 @@ export default {
   .input-with-select:hover {
     background-color: rgba(0, 0, 0, 0.08);
   }
+
   .header-info {
     display: flex;
     justify-content: flex-end;
     align-items: center;
   }
 }
+
 .user-tools {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   margin-bottom: 20px;
+
   .tool {
     height: 2rem;
     width: 2rem;
@@ -361,20 +397,22 @@ export default {
     text-align: center;
   }
 }
-.button-text{
-    user-select: none;
-    transition: background 20ms ease-in 0s;
-    cursor: pointer;
-    padding: 4px 10px;
-    border-radius: 3px;
-    flex-shrink: 0;
-    font-size: 15px;
-    margin-left: 2px;
-    margin-right: 2px;
-    font-weight: 500;
-    width: auto;
-    &:hover{
-      background: rgba(55, 53, 47, 0.16);
-    }
+
+.button-text {
+  user-select: none;
+  transition: background 20ms ease-in 0s;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  font-size: 15px;
+  margin-left: 2px;
+  margin-right: 2px;
+  font-weight: 500;
+  width: auto;
+
+  &:hover {
+    background: rgba(55, 53, 47, 0.16);
+  }
 }
 </style>
