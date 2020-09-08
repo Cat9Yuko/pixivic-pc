@@ -23,26 +23,45 @@
     @scroll.passive="onScroll"
   >
     <slot />
-    <div ref="scrollContent" class="vue-virtual-collection-container" :style="containerStyle">
+    <div
+      ref="scrollContent"
+      class="vue-virtual-collection-container"
+      :style="containerStyle"
+    >
       <div
         v-for="item in displayItems"
         :key="item.id"
         class="cell-container"
         :style="getComputedStyle(item)"
       >
-        <slot name="cell" :data="item" />
+        <slot
+          name="cell"
+          :data="item"
+        />
       </div>
     </div>
-    <infinite-loading :identifier="identifier" @infinite="infinite">
+    <infinite-loading
+      :identifier="identifier"
+      @infinite="infinite"
+    >
       <div slot="no-more" />
-      <div slot="no-results" style="margin-top: 50px;">
-        <svg font-size="160" class="icon" aria-hidden="true">
+      <div
+        slot="no-results"
+        style="margin-top: 50px;"
+      >
+        <svg
+          font-size="160"
+          class="icon"
+          aria-hidden="true"
+        >
           <use xlink:href="#pickongtai1" />
         </svg>
-        <p style="color: #e3f2fa; font-size: 20px;">没有内容</p>
+        <p style="color: #e3f2fa; font-size: 20px;">
+          没有内容
+        </p>
       </div>
     </infinite-loading>
-    <el-backtop target=".vue-virtual-collection"></el-backtop>
+    <el-backtop target=".vue-virtual-collection" />
   </div>
 </template>
 

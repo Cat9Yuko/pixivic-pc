@@ -1,11 +1,20 @@
 
 <template>
   <div class="CardList">
-    <div v-if="!collectionList.length" style="margin:50px auto;width:200px;text-align:center;">
-      <svg font-size="160" class="icon" aria-hidden="true">
+    <div
+      v-if="!collectionList.length"
+      style="margin:50px auto;width:40%;text-align:center;"
+    >
+      <svg
+        font-size="160"
+        class="icon"
+        aria-hidden="true"
+      >
         <use xlink:href="#pickongtai1" />
       </svg>
-      <p style="color: #E3F2FA; font-size: 20px;">没有内容</p>
+      <p style="color: #E3F2FA; font-size: 20px;">
+        没有内容
+      </p>
     </div>
     <div
       v-infinite-scroll="getCollections"
@@ -19,7 +28,10 @@
         :body-style="{ padding: '0px' }"
       >
         <div class="card-body">
-          <div class="image-area" @click="goInfoPage(item)">
+          <div
+            class="image-area"
+            @click="goInfoPage(item)"
+          >
             <el-image
               v-if="item.cover"
               :src="item.cover.imageUrls[0].medium | replaceSmall"
@@ -27,11 +39,18 @@
               fit="cover"
               lazy
             >
-              <div slot="placeholder" class="image-slot">
+              <div
+                slot="placeholder"
+                class="image-slot"
+              >
                 加载中
                 <span class="dot">...</span>
               </div>
-              <div slot="error" class="image-slot">
+              <div
+                slot="error"
+                class="image-slot"
+                style="height: 100%"
+              >
                 <i class="el-icon-picture-outline" />
               </div>
             </el-image>
@@ -46,28 +65,42 @@
 
           <div class="text-area">
             <time class="time">{{ item.createTime.split("T")[0] }}</time>
-            <h3 @click="goInfoPage(item)">{{ item.title }}</h3>
+            <h3 @click="goInfoPage(item)">
+              {{ item.title }}
+            </h3>
             <div>
-              <p class="desc">{{ item.caption }}</p>
+              <p class="desc">
+                {{ item.caption }}
+              </p>
               <p class="tag-list">
                 <el-tag
                   v-for="tag in item.tagList"
                   :key="tag.tagName"
                   :disable-transitions="false"
+                  :title="tag.tagName"
                   @click="clickTag(tag)"
-                >{{ tag.tagName }}</el-tag>
+                >
+                  {{ tag.tagName }}
+                </el-tag>
               </p>
-              <el-dropdown v-if="powerFlag" class="setting">
+              <el-dropdown
+                v-if="powerFlag"
+                class="setting"
+              >
                 <span>
                   <i class="el-icon-setting" />
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item
                     @click.native="modifyCollect(item)"
-                  >修改</el-dropdown-item>
+                  >
+                    修改
+                  </el-dropdown-item>
                   <el-dropdown-item
                     @click.native="deletCollect(item)"
-                  >删除</el-dropdown-item>
+                  >
+                    删除
+                  </el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </div>
@@ -121,6 +154,7 @@ export default {
     },
     goInfoPage(item) {
       this.$store.dispatch('setCollectInfo', item);
+      localStorage.setItem('collect',JSON.stringify(item))
       this.$router.push({
         path: `/collect/collectionsillust/${item.id}`,
         query: { collectionId: item.id }
@@ -167,6 +201,7 @@ export default {
 <style scoped lang="less">
 .CardList {
   .card-body {
+    height: 100%;
     position: relative;
     display: flex;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
@@ -183,8 +218,7 @@ export default {
     }
 
     .image-area {
-      width: 400px;
-      height: 300px;
+      width: 40%;
       display: block;
       overflow: hidden;
       .image {
@@ -194,11 +228,11 @@ export default {
       }
     }
     .text-area {
-      width: 198px;
-      margin: 10px 20px;
+      width: 50%;
+      margin: 0.8em 1.25em;
       .time {
         color: #888;
-        font-size: 12px;
+        font-size: 1rem;
       }
       h3 {
         margin: 18px 0;
@@ -210,15 +244,22 @@ export default {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
-        height: 60px;
+        height: 30%;
         overflow: hidden;
       }
       .tag-list {
-        display: flex;
-        flex-wrap: wrap;
-        height: 80px;
+        display: inline;
+        overflow: hidden;
+        height: 100%;
+        margin-bottom: 0;
         .el-tag + .el-tag {
-          margin-left: 10px;
+          margin-left: 0.8rem;
+        }
+        .el-tag{
+          max-width: 4rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space:nowrap;
         }
       }
     }

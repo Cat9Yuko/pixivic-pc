@@ -10,7 +10,7 @@ const state = {
   loginOrSign: true,
   collectBoolean: false,
   readyCollectItem: {},
-  collectInfo: {}
+  collectInfo: JSON.parse(localStorage.getItem('collect'))||{}
 };
 
 export default state;

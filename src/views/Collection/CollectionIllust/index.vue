@@ -6,7 +6,10 @@
       :list="illustList"
       @infinite="infinite"
     >
-      <div class="collectionsIllust-btns">
+      <div
+        v-if="''+collectInfo.userId===''+user.id"
+        class="collectionsIllust-btns"
+      >
         <el-button
           type="primary"
           @click="handleModifyList"
@@ -104,8 +107,7 @@ export default {
         });
     },
     handleModifyList() {
-      this.CopyillustList = [...this.illustList];
-
+      this.CopyillustList = this.illustList.filter(e=>!e.isad);
       this.modifyListBoolean = !this.modifyListBoolean;
     },
     handleModifyListClose(e) {
@@ -114,8 +116,9 @@ export default {
     },
     handleAdjust(list) {
       this.modifyListBoolean = false;
-      this.illustList = list;
-      this.illustList.splice(1, 0);
+      this.page=1;
+      this.illustList=[];
+      this.identifier++
     }
   }
 };
@@ -134,11 +137,12 @@ export default {
     margin: 20px;
   }
   &-comment {
+    display: flex;
+    justify-content: flex-end;
     margin: 20px;
+    float: right;
     width: 600px;
-    border: 1px solid @border-first;
-    max-height: 600px;
-    overflow-y: scroll;
+    border: 1px solid;
   }
 }
 </style>

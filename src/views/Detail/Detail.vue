@@ -493,7 +493,6 @@ export default {
       margin: 0 auto;
       background: #fff;
       .card {
-        width: 800px;
         h1 {
           color: rgb(28, 28, 28);
           font-size: .25rem;
@@ -575,9 +574,10 @@ export default {
     .artist-info {
       display: flex;
       padding: 1em;
-      border-radius: 0.5em;
       align-items: center;
       h2 {
+        width: 70%;
+        overflow: hidden;
         font-size: 1rem;
         font-weight: bold;
         margin-left: 6px;
