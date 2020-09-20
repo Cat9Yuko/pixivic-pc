@@ -172,7 +172,7 @@ export default {
         })
         .then(res => {
           if (res.data.data) {
-            const data = res.data.data.filter(tmp => !(tmp.xrestrict === 1 || tmp.sanityLevel >= (this.user ? 3 : 2)));
+            const data = res.data.data.filter(tmp => !(tmp.xrestrict === 1 || tmp.sanityLevel >= (this.user ? 2 : 2)));
             if (this.type === 'illust') {
               this.IllustList = this.IllustList.concat(data);
             } else {
