@@ -15,7 +15,7 @@
       <main class="detail-content">
         <figure class="detail-content__figure">
           <el-image
-            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
+            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 3 : 2)"
             :preview-src-list="srcList"
             :src="illustDetail.originalSrc"
             fit="contain"
@@ -27,7 +27,7 @@
             >
               <div>
                 <el-image
-                  v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
+                  v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 3 : 2)"
                   :src="illustDetail.src"
                   fit="contain"
                   style="width:100%;height:80vh;"
@@ -282,7 +282,7 @@ export default {
         src: data.src || replaceSmallImg(data.imageUrls[0].medium),
         avatarSrc: data.avatarSrc || replaceBigImg(data.artistPreView.avatar),
         createDate: dayjs(data.createDate).format('YYYY-MM-DD'),
-        setu: data.setu || !!((data.xrestrict === 1 || data.sanityLevel > (this.user ? 5 : 4))) && this.user.username !== 'pixivic',
+        setu: data.setu || !!((data.xrestrict === 1 || data.sanityLevel > (this.user ? 3 : 2))) && this.user.username !== 'pixivic',
         imgs: data.imgs || data.imageUrls.reduce((pre, cur) => {
           return pre.concat(replaceBigImg(cur.original));
         }, [])
@@ -408,7 +408,7 @@ export default {
             const {
               data: { data }
             } = res;
-            this.pictureList = this.pictureList.concat(data).filter(item => item.xrestrict === 0 && item.sanityLevel <= (this.user ? 5 : 4));
+            this.pictureList = this.pictureList.concat(data).filter(item => item.xrestrict === 0 && item.sanityLevel <= (this.user ? 3 : 2));
           }
         })
         .catch(err => {
@@ -426,7 +426,7 @@ export default {
             this.$message.info('到底了');
           } else {
             this.relatedPictureList = this.relatedPictureList.concat(
-              res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 5 : 4)))
+              res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 3 : 2)))
             );
           }
         })
