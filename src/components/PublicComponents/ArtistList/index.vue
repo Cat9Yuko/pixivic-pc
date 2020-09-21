@@ -12,14 +12,28 @@
         :key="artistItem.id"
         class="artist-item"
       >
-        <div class="avatar" @click="goArtist(artistItem.id)">
-          <el-avatar :size="80" :src="artistItem.avatar | replaceBig" />
+        <div
+          class="avatar"
+          @click="goArtist(artistItem.id)"
+        >
+          <el-avatar
+            :size="80"
+            :src="artistItem.avatar | replaceBig"
+          />
         </div>
         <div class="info">
-          <div class="name">{{ artistItem.name }}</div>
-          <div class="desc">{{ artistItem.comment }}</div>
+          <div class="name">
+            {{ artistItem.name }}
+          </div>
+          <div class="desc">
+            {{ artistItem.comment }}
+          </div>
           <div class="followed-button">
-            <el-button round type="primary" @click="follow(artistItem)">
+            <el-button
+              round
+              type="primary"
+              @click="follow(artistItem)"
+            >
               {{ artistItem.isFollowed ? $t('followed') : $t('follow') }}
             </el-button>
           </div>
@@ -28,7 +42,7 @@
           <ul class="picture-array">
             <li
               v-for="(item, index) in artistItem.recentlyIllustrations.filter(
-                item => item.xrestrict === 0 && item.sanityLevel <= (user ? 5 : 4)
+                item => item.xrestrict === 0 && item.sanityLevel <= 2
               )"
               :key="index"
               class="picture-item"
@@ -40,16 +54,26 @@
                 fit="cover"
                 lazy
               >
-                <div slot="error" class="image-slot">
+                <div
+                  slot="error"
+                  class="image-slot"
+                >
                   <i class="el-icon-picture-outline" />
                 </div>
               </el-image>
-              <div class="title">{{ item.title }}</div>
+              <div class="title">
+                {{ item.title }}
+              </div>
             </li>
           </ul>
         </div>
       </div>
-      <p v-if="loading" class="bottom">加载中...</p>
+      <p
+        v-if="loading"
+        class="bottom"
+      >
+        加载中...
+      </p>
     </div>
   </div>
 </template>

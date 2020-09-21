@@ -15,7 +15,7 @@
       <main class="detail-content">
         <figure class="detail-content__figure">
           <el-image
-            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
+            v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=2"
             :preview-src-list="srcList"
             :src="illustDetail.originalSrc"
             fit="contain"
@@ -27,7 +27,7 @@
             >
               <div>
                 <el-image
-                  v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=(user ? 5 : 4)"
+                  v-if="illustDetail.xrestrict==0&&illustDetail.sanityLevel<=2"
                   :src="illustDetail.src"
                   fit="contain"
                   style="width:100%;height:80vh;"
@@ -407,7 +407,7 @@ export default {
             const {
               data: { data }
             } = res;
-            this.pictureList = this.pictureList.concat(data).filter(item => item.xrestrict === 0 && item.sanityLevel <= (this.user ? 5 : 4));
+            this.pictureList = this.pictureList.concat(data).filter(item => item.xrestrict === 0 && item.sanityLevel <= 2);
           }
         })
         .catch(err => {
@@ -425,7 +425,7 @@ export default {
             this.$message.info('到底了');
           } else {
             this.relatedPictureList = this.relatedPictureList.concat(
-              res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > (this.user && this.user.id ? 5 : 4)))
+              res.data.data.filter((item) => !(item.xrestrict === 1 || item.sanityLevel > 2))
             );
           }
         })

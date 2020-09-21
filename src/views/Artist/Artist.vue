@@ -7,80 +7,106 @@
         :identifier="identifier"
         :list="type === 'illust' ? IllustList : mangaList"
         @infinite="infinite"
-      ><div v-if="artistDetail" class="artist_property">
-        <div class="artist-base">
-          <div class="artist-one">
-            <div class="artist-name">
-              <div class="avatar">
-                <img :src="artistDetail.avatarSrc" alt>
-              </div>
-              <div class="name-line">
-                <div class="name">
-                  <h1>{{ artistDetail.name }}</h1>
-                </div>
-                <div class="follow">
-                  <el-button
-                    style="width:160px"
-                    round
-                    size="small"
-                    @click="followArtist"
+      >
+        <div
+          v-if="artistDetail"
+          class="artist_property"
+        >
+          <div class="artist-base">
+            <div class="artist-one">
+              <div class="artist-name">
+                <div class="avatar">
+                  <img
+                    :src="artistDetail.avatarSrc"
+                    alt
                   >
-                    {{ artistDetail.isFollowed ? $t('followed') : $t('follow') }}
-                  </el-button>
+                </div>
+                <div class="name-line">
+                  <div class="name">
+                    <h1>{{ artistDetail.name }}</h1>
+                  </div>
+                  <div class="follow">
+                    <el-button
+                      style="width:160px"
+                      round
+                      size="small"
+                      @click="followArtist"
+                    >
+                      {{ artistDetail.isFollowed ? $t('followed') : $t('follow') }}
+                    </el-button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="artist-one">
-            <div class="artist-focus">
-              <span style="color: #999;">
-                <em
-                  style="font-style:normal;color: #5C5C5C;font-weight: bold;"
+            <div class="artist-one">
+              <div class="artist-focus">
+                <span style="color: #999;">
+                  <em
+                    style="font-style:normal;color: #5C5C5C;font-weight: bold;"
+                  >
+                    {{ artistDetail.totalFollowUsers }} </em>{{ $t('follow') }}
+                </span>
+              </div>
+            </div>
+            <div
+              class="artist-one"
+              style="padding: 0 0 32px;"
+            >
+              <div class="artist-focus">
+                <span v-if="artistDetail.region">
+                  <i class="el-icon-location-outline" />
+                  {{ artistDetail.region }}
+                </span>
+              </div>
+              <div class="artist-link">
+                <i
+                  v-if="artistDetail.webPage"
+                  class="el-icon-s-home icon"
+                  @click="windowOpen(artistDetail.webPage)"
+                />
+                <i
+                  v-if="artistDetail.twitterUrl"
+                  class="el-icon-chat-dot-round icon"
+                  @click="windowOpen(artistDetail.twitterUrl)"
+                />
+                <i class="el-icon-share icon" />
+              </div>
+              <div class="artist-focus">
+                <div class="comment">
+                  {{ artistDetail.comment }}
+                </div>
+                <el-popover
+                  placement="bottom"
+                  trigger="click"
+                  :content="artistDetail.comment"
+                  :width="400"
                 >
-                  {{ artistDetail.totalFollowUsers }} </em>{{ $t('follow') }}
-              </span>
+                  <div
+                    slot="reference"
+                    class="end"
+                  >
+                    {{ $t('openAll') }}
+                  </div>
+                </el-popover>
+              </div>
             </div>
-          </div>
-          <div class="artist-one" style="padding: 0 0 32px;">
-            <div class="artist-focus">
-              <span v-if="artistDetail.region">
-                <i class="el-icon-location-outline" />
-                {{ artistDetail.region }}
-              </span>
+            <div
+              class="tabs"
+              @change="getArtistList"
+            >
+              <el-radio-group v-model="type">
+                <el-radio-button
+                  label="illust"
+                  name="插画"
+                />
+                <el-radio-button
+                  label="manga"
+                  name="漫画"
+                />
+              </el-radio-group>
             </div>
-            <div class="artist-link">
-              <i
-                v-if="artistDetail.webPage"
-                class="el-icon-s-home icon"
-                @click="windowOpen(artistDetail.webPage)"
-              />
-              <i
-                v-if="artistDetail.twitterUrl"
-                class="el-icon-chat-dot-round icon"
-                @click="windowOpen(artistDetail.twitterUrl)"
-              />
-              <i class="el-icon-share icon" />
-            </div>
-            <div class="artist-focus">
-              <div class="comment">{{ artistDetail.comment }}</div>
-              <el-popover
-                placement="bottom"
-                trigger="click"
-                :content="artistDetail.comment"
-                :width="400"
-              >
-                <div slot="reference" class="end">{{ $t('openAll') }}</div>
-              </el-popover>
-            </div>
-          </div>
-          <div class="tabs" @change="getArtistList">
-            <el-radio-group v-model="type">
-              <el-radio-button label="illust" name="插画" />
-              <el-radio-button label="manga" name="漫画" />
-            </el-radio-group>
           </div>
         </div>
-      </div>
       </virtual-list>
     </keep-alive>
   </div>
@@ -172,7 +198,7 @@ export default {
         })
         .then(res => {
           if (res.data.data) {
-            const data = res.data.data.filter(tmp => !(tmp.xrestrict === 1 || tmp.sanityLevel >= (this.user ? 5 : 4)));
+            const data = res.data.data.filter(tmp => !(tmp.xrestrict === 1 || tmp.sanityLevel >= 2));
             if (this.type === 'illust') {
               this.IllustList = this.IllustList.concat(data);
             } else {
